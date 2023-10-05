@@ -129,13 +129,14 @@ if (maek.OS === 'windows') {
 // objFileBase (optional): base name object file to produce (if not supplied, set to options.objDir + '/' + cppFile without the extension)
 //returns objFile: objFileBase + a platform-dependant suffix ('.o' or '.obj')
 const client_names = [
-	maek.CPP('client.cpp'),
+	// maek.CPP('client.cpp'),
 	maek.CPP('PlayMode.cpp'),
 	maek.CPP('LitColorTextureProgram.cpp'),
 	//maek.CPP('ColorTextureProgram.cpp'),  //not used right now, but you might want it
 	maek.CPP('Sound.cpp'),
 	maek.CPP('load_wav.cpp'),
-	maek.CPP('load_opus.cpp')
+	maek.CPP('load_opus.cpp'),
+	maek.CPP('maze_client.cpp'),
 ];
 
 const server_names = [
@@ -176,13 +177,14 @@ const show_scene_names = [
 // objFiles: array of objects to link
 // exeFileBase: name of executable file to produce
 //returns exeFile: exeFileBase + a platform-dependant suffix (e.g., '.exe' on windows)
-const client_exe = maek.LINK([...client_names, ...common_names], 'dist/client');
+// const client_exe = maek.LINK([...client_names, ...common_names], 'dist/client');
 const server_exe = maek.LINK([...server_names, ...common_names], 'dist/server');
+const maze_client_exe = maek.LINK([...client_names, ...common_names], 'dist/maze-client');
 const show_meshes_exe = maek.LINK([...show_meshes_names, ...common_names], 'scenes/show-meshes');
 const show_scene_exe = maek.LINK([...show_scene_names, ...common_names], 'scenes/show-scene');
 
 //set the default target to the game (and copy the readme files):
-maek.TARGETS = [client_exe, server_exe, show_meshes_exe, show_scene_exe, ...copies];
+maek.TARGETS = [maze_client_exe, server_exe, show_meshes_exe, show_scene_exe, ...copies];
 
 //Note that tasks that produce ':abstract targets' are never cached.
 // This is similar to how .PHONY targets behave in make.
